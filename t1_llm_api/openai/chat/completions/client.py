@@ -18,20 +18,18 @@ class OpenAIClient(BaseOpenAIClient):
         _async_client (AsyncOpenAI): Asynchronous OpenAI client instance.
         Inherits all other attributes from BaseOpenAIClient.
     """
+def __init__(self, endpoint: str, model_name: str, system_prompt: str, api_key: str):
+    """
+    Initialize the OpenAI Chat Completions client with SDK.
 
-    def __init__(self, endpoint: str, model_name: str, system_prompt: str, api_key: str):
-        """
-        Initialize the OpenAI Chat Completions client with SDK.
+    Args:
+        endpoint (str): The OpenAI API endpoint (for compatibility, not used by SDK).
+        model_name (str): The OpenAI model to use (e.g., 'gpt-5').
+        system_prompt (str): The system message to guide the model's behavior.
+        api_key (str): The OpenAI API key for authentication.
+    """
 
-        Args:
-            endpoint (str): The OpenAI API endpoint (for compatibility, not used by SDK).
-            model_name (str): The OpenAI model to use (e.g., 'gpt-5').
-            system_prompt (str): The system message to guide the model's behavior.
-            api_key (str): The OpenAI API key for authentication.
-        """
-        #TODO:
-        # Call to __init__ of super class
-        super().__init__(
+    super().__init__(
         endpoint=endpoint,
         model_name=model_name,
         system_prompt=system_prompt,
@@ -40,6 +38,7 @@ class OpenAIClient(BaseOpenAIClient):
 
     self._client = OpenAI(api_key=api_key)
     self._async_client = AsyncOpenAI(api_key=api_key)
+
         # (In readme you can find samples with both of these clients)
         
         # Useful link with request/response samples https://developers.openai.com/api/reference/resources/chat/subresources/completions/methods/create
