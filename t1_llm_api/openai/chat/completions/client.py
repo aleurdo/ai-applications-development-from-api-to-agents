@@ -31,8 +31,7 @@ class OpenAIClient(BaseOpenAIClient):
         """
         #TODO:
         # Call to __init__ of super class
-        super().__init__( 
-            endpoint=endpoint, 
+        super().__init__(endpoint=endpoint, 
             model_name=model_name,
             system_prompt=system_prompt,
             api_key=api_key, )
