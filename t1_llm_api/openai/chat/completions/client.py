@@ -31,8 +31,16 @@ class OpenAIClient(BaseOpenAIClient):
         """
         #TODO:
         # Call to __init__ of super class
+        super().__init__( 
+            endpoint=endpoint, 
+            model_name=model_name,
+            system_prompt=system_prompt,
+            api_key=api_key, )
         # Add OpenAI and AsyncOpenAI clients https://github.com/openai/openai-python?tab=readme-ov-file#usage
+        self._client = OpenAI(api_key=api_key) 
+        self._async_client = AsyncOpenAI(api_key=api_key)
         # (In readme you can find samples with both of these clients)
+        
         # Useful link with request/response samples https://developers.openai.com/api/reference/resources/chat/subresources/completions/methods/create
         raise NotImplementedError
 
@@ -53,9 +61,21 @@ class OpenAIClient(BaseOpenAIClient):
         """
         #TODO:
         # - Prepare message history with System prompt
+        message_history = [
+            { "role": "system", 
+             "content": self._system_prompt, } ]
+        message_history.extend( { "role": message.role.value, 
+                                 "content": message.content, } for message in messages )
         # - Call client
+        response = self._client.chat.completions.create( model=self._model_name,
+                                                        messages=message_history, **kwargs, )
         # - Print response to console
+        content = response.choices[0].message.content 
+        print(content)
         # - Return ASSISTANT message
+
+        return Message( role=Role.ASSISTANT, content=content, ) 
+        async def stream_response(self, messages: list[Message], **kwargs) -> Message: """ Get a streaming response from OpenAI's Chat Completions API. """
         raise NotImplementedError
 
     async def stream_response(self, messages: list[Message], **kwargs) -> Message:
@@ -78,8 +98,22 @@ class OpenAIClient(BaseOpenAIClient):
         """
         #TODO:
         # - Prepare message history with System prompt
+        message_history = [
+            { "role": "system", "content": self._system_prompt, } ] 
+        message_history.extend( { "role": message.role.value, 
+                                 "content": message.content, } for message in messages )
         # - Call client with streaming mode
+        stream = await self._async_client.chat.completions.create( model=self._model_name,
+                                                                  messages=message_history, 
+                                                                  stream=True, 
+                                                                  **kwargs, )
         # - Handle stream with chunks
+        
         # - Print response to console
+        full_response = "" async for chunk in stream: if chunk.choices and chunk.choices[0].delta.content: 
+            content = chunk.choices[0].delta.content 
+            print(content, end="", flush=True) 
+            full_response += content print()
         # - Return ASSISTANT message
-        raise NotImplementedError
+        return Message( role=Role.ASSISTANT, content=full_response, )
+        
