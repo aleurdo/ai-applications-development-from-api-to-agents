@@ -38,4 +38,4 @@ class BaseOpenAIClient(AIClient, ABC):
             api_key=f"Bearer {api_key}", 
             system_prompt=system_prompt, )
         # The `api_key` should be formatted according to Open AI specification
-        raise NotImplementedError
+       
