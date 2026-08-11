@@ -31,13 +31,15 @@ class OpenAIClient(BaseOpenAIClient):
         """
         #TODO:
         # Call to __init__ of super class
-        super().__init__(endpoint=endpoint, 
-            model_name=model_name,
-            system_prompt=system_prompt,
-            api_key=api_key, )
-        # Add OpenAI and AsyncOpenAI clients https://github.com/openai/openai-python?tab=readme-ov-file#usage
-        self._client = OpenAI(api_key=api_key) 
-        self._async_client = AsyncOpenAI(api_key=api_key)
+        super().__init__(
+        endpoint=endpoint,
+        model_name=model_name,
+        system_prompt=system_prompt,
+        api_key=api_key,
+    )
+
+    self._client = OpenAI(api_key=api_key)
+    self._async_client = AsyncOpenAI(api_key=api_key)
         # (In readme you can find samples with both of these clients)
         
         # Useful link with request/response samples https://developers.openai.com/api/reference/resources/chat/subresources/completions/methods/create
