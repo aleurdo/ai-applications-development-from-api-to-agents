@@ -15,12 +15,8 @@ async def start(stream: bool, client: AIClient) -> None:
     4. Maintains conversation context
 
     The loop continues until the user types 'exit'.
-
-    Args:
-        stream (bool): If True, use streaming responses (real-time token display).
-                      If False, use synchronous responses (complete response at once).
-        client (AIClient): The AI client instance to use for generating responses.
     """
+
     conversation = Conversation()
 
     while True:
@@ -33,6 +29,7 @@ async def start(stream: bool, client: AIClient) -> None:
             role=Role.USER,
             content=user_input,
         )
+
         conversation.add_message(user_message)
 
         if stream:
