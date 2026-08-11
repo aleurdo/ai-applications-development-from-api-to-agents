@@ -8,10 +8,6 @@ from t1_llm_api.openai.base import BaseOpenAIClient
 class OpenAIClient(BaseOpenAIClient):
     """
     Client for OpenAI Chat Completions API using the official SDK.
-
-    This implementation uses the official OpenAI Python library to interact
-    with the Chat Completions API, providing both synchronous and streaming
-    response capabilities.
     """
 
     def __init__(
@@ -21,10 +17,6 @@ class OpenAIClient(BaseOpenAIClient):
         system_prompt: str,
         api_key: str,
     ):
-        """
-        Initialize the OpenAI Chat Completions client with SDK.
-        """
-
         super().__init__(
             endpoint=endpoint,
             model_name=model_name,
@@ -40,7 +32,6 @@ class OpenAIClient(BaseOpenAIClient):
         Get a synchronous response from OpenAI's Chat Completions API.
         """
 
-        # Prepare message history with system prompt
         message_history = [
             {
                 "role": "system",
@@ -56,18 +47,16 @@ class OpenAIClient(BaseOpenAIClient):
             for message in messages
         )
 
-        # Call client
         response = self._client.chat.completions.create(
             model=self._model_name,
             messages=message_history,
             **kwargs,
         )
 
-        # Print response
         content = response.choices[0].message.content
+
         print(content)
 
-        # Return ASSISTANT message
         return Message(
             role=Role.ASSISTANT,
             content=content,
@@ -82,7 +71,6 @@ class OpenAIClient(BaseOpenAIClient):
         Get a streaming response from OpenAI's Chat Completions API.
         """
 
-        # Prepare message history with system prompt
         message_history = [
             {
                 "role": "system",
@@ -98,7 +86,6 @@ class OpenAIClient(BaseOpenAIClient):
             for message in messages
         )
 
-        # Call client with streaming mode
         stream = await self._async_client.chat.completions.create(
             model=self._model_name,
             messages=message_history,
@@ -106,10 +93,8 @@ class OpenAIClient(BaseOpenAIClient):
             **kwargs,
         )
 
-        # Handle stream with chunks
         full_response = ""
 
-        # Print response to console
         async for chunk in stream:
             if chunk.choices and chunk.choices[0].delta.content:
                 content = chunk.choices[0].delta.content
@@ -118,7 +103,6 @@ class OpenAIClient(BaseOpenAIClient):
 
         print()
 
-        # Return ASSISTANT message
         return Message(
             role=Role.ASSISTANT,
             content=full_response,
