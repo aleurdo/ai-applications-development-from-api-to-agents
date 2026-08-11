@@ -76,7 +76,7 @@ class OpenAIClient(BaseOpenAIClient):
 
         return Message( role=Role.ASSISTANT, content=content, ) 
         async def stream_response(self, messages: list[Message], **kwargs) -> Message: """ Get a streaming response from OpenAI's Chat Completions API. """
-        raise NotImplementedError
+        
 
     async def stream_response(self, messages: list[Message], **kwargs) -> Message:
         """
