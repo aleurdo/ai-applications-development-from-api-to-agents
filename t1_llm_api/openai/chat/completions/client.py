@@ -17,15 +17,15 @@ class OpenAIClient(BaseOpenAIClient):
         system_prompt: str,
         api_key: str,
     ):
-        super().__init__(
-            endpoint=endpoint,
-            model_name=model_name,
-            system_prompt=system_prompt,
-            api_key=api_key,
+    super().__init__(
+        endpoint=endpoint,
+        model_name=model_name,
+        system_prompt=system_prompt,
+        api_key=api_key,
         )
 
-        self._client = OpenAI(api_key=api_key)
-        self._async_client = AsyncOpenAI(api_key=api_key)
+    self._client = OpenAI(api_key=api_key)
+    self._async_client = AsyncOpenAI(api_key=api_key)
 
     def response(self, messages: list[Message], **kwargs) -> Message:
         """
