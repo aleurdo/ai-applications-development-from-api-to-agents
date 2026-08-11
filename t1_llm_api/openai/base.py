@@ -22,11 +22,9 @@ class BaseOpenAIClient(AIClient, ABC):
         Initialize the OpenAI client with Bearer token authentication.
         """
 
-        # Make validation for api_key
         if not api_key or api_key.strip() == "":
             raise ValueError("API key cannot be null or empty")
 
-        # Call parent __init__
         super().__init__(
             endpoint=endpoint,
             model_name=model_name,
