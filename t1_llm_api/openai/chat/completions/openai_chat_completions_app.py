@@ -13,7 +13,7 @@ openai_client = OpenAIClient(
 )
 openai_custom_client = CustomOpenAIClient(
     endpoint=OPENAI_CHAT_COMPLETIONS_ENDPOINT,
-    model_name='gpt-5.2',
+    model_name='gpt-4o-mini',
     api_key=OPENAI_API_KEY,
     system_prompt=DEFAULT_SYSTEM_PROMPT,
 )
