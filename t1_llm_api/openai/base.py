@@ -9,33 +9,27 @@ class BaseOpenAIClient(AIClient, ABC):
 
     This class extends AIClient and adds OpenAI-specific initialization,
     particularly formatting the API key as a Bearer token for authorization.
-
-    Attributes:
-        Inherits all attributes from AIClient.
     """
 
-    def __init__(self, endpoint: str, model_name: str, system_prompt: str, api_key: str):
+    def __init__(
+        self,
+        endpoint: str,
+        model_name: str,
+        system_prompt: str,
+        api_key: str,
+    ):
         """
         Initialize the OpenAI client with Bearer token authentication.
-
-        Args:
-            endpoint (str): The OpenAI API endpoint URL.
-            model_name (str): The OpenAI model identifier (e.g., 'gpt-5').
-            system_prompt (str): The system-level instruction for the model.
-            api_key (str): The raw OpenAI API key (will be prefixed with 'Bearer ').
-
-        Raises:
-            ValueError: If api_key is None, empty, or contains only whitespace.
         """
-        #TODO:
-        # Make validation for `api_key` (the same as in parent class)
-        if not api_key or api_key.strip() == "": 
+
+        # Make validation for api_key
+        if not api_key or api_key.strip() == "":
             raise ValueError("API key cannot be null or empty")
-        # Call to __init__ of super class
-    super().__init__(
-        endpoint=endpoint, 
-        model_name=model_name, 
-        api_key=f"Bearer {api_key}", 
-        system_prompt=system_prompt, )
-        # The `api_key` should be formatted according to Open AI specification
-       
+
+        # Call parent __init__
+        super().__init__(
+            endpoint=endpoint,
+            model_name=model_name,
+            api_key=f"Bearer {api_key}",
+            system_prompt=system_prompt,
+        )
