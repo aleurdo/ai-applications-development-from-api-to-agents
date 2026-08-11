@@ -42,7 +42,7 @@ class OpenAIClient(BaseOpenAIClient):
         # (In readme you can find samples with both of these clients)
         
         # Useful link with request/response samples https://developers.openai.com/api/reference/resources/chat/subresources/completions/methods/create
-        raise NotImplementedError
+       
 
     def response(self, messages: list[Message], **kwargs) -> Message:
         """
